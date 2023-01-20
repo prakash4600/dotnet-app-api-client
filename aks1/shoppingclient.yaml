@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: shoppingclient
-          image: demoshopping.azurecr.io/shoppingclient:v1
+          image: dbimage.azurecr.io/cloudsmartops/dotnet-app:latest
           imagePullPolicy: IfNotPresent          
           ports:
             - containerPort: 80
