@@ -44,6 +44,9 @@ Log in to the container registry
 az acr login --name shoppingacr
 Login Succeeded
 --
+Create secret in aks
+kubectl create secret docker-registry acr-secret --docker-server=your-docker-server --docker-username=your-docker-username --docker-password=your-password --docker-email=your-email
+--
 Tag a container image
 
 get the login server address
