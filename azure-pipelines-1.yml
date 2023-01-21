@@ -1,0 +1,65 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+jobs:
+- job: Job_1
+  displayName: Agent job 1
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+  - checkout: self
+    fetchDepth: 1
+  - task: Docker@0
+    displayName: Build an image
+    inputs:
+      containerregistrytype: 'Azure Container Registry'
+      azureSubscription: 'SmartOps'
+      azureContainerRegistry: '{"loginServer":"appimage.azurecr.io", "id" : "/subscriptions/479266ef-b2aa-4dc8-8c29-07d76744d6bc/resourceGroups/aks/providers/Microsoft.ContainerRegistry/registries/appimage"}'
+      action: 'Build an image'
+      dockerFile: 'Shopping/ShopppingApiDockerfile'
+      imageName: 'ShoppingApi'
+      includeLatestTag: true
+  - task: Docker@0
+    displayName: Push an image
+    inputs:
+      containerregistrytype: 'Azure Container Registry'
+      azureSubscription: 'SmartOps'
+      azureContainerRegistry: '{"loginServer":"appimage.azurecr.io", "id" : "/subscriptions/479266ef-b2aa-4dc8-8c29-07d76744d6bc/resourceGroups/aks/providers/Microsoft.ContainerRegistry/registries/appimage"}'
+      action: 'Push an image'
+      imageName: 'ShoppingApi'
+      includeLatestTag: true
+- job: Job_2
+  displayName: Agent job
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+  - checkout: self
+    fetchDepth: 1
+  - task: Docker@0
+    displayName: buildAndPush
+    inputs:
+      containerregistrytype: 'Azure Container Registry'
+      azureSubscription: 'SmartOps'
+      azureContainerRegistry: '{"loginServer":"appimage.azurecr.io", "id" : "/subscriptions/479266ef-b2aa-4dc8-8c29-07d76744d6bc/resourceGroups/aks/providers/Microsoft.ContainerRegistry/registries/appimage"}'
+      action: 'Build an image'
+      dockerFile: 'Shopping/ShopppingClientDockerfile'
+      imageName: 'ShoppingClient'
+      includeLatestTag: true
+  - task: Docker@0
+    displayName: Push an image
+    inputs:
+      containerregistrytype: 'Azure Container Registry'
+      azureSubscription: 'SmartOps'
+      azureContainerRegistry: '{"loginServer":"appimage.azurecr.io", "id" : "/subscriptions/479266ef-b2aa-4dc8-8c29-07d76744d6bc/resourceGroups/aks/providers/Microsoft.ContainerRegistry/registries/appimage"}'
+      action: 'Push an image'
+      imageName: 'ShoppingClient'
+      includeLatestTag: true
+...
+
