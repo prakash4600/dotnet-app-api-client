@@ -2,8 +2,8 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "registries_acrdemo460_name": {
-            "defaultValue": "acrdemo460",
+        "registries_demoappacr123_name": {
+            "defaultValue": "demoappacr123",
             "type": "String"
         }
     },
@@ -12,25 +12,25 @@
         {
             "type": "Microsoft.ContainerRegistry/registries",
             "apiVersion": "2022-02-01-preview",
-            "name": "[parameters('registries_acrdemo460_name')]",
-            "location": "francecentral",
+            "name": "[parameters('registries_demoappacr123_name')]",
+            "location": "eastus",
             "sku": {
-                "name": "Premium",
-                "tier": "Premium"
+                "name": "Basic",
+                "tier": "Basic"
             },
             "properties": {
-                "adminUserEnabled": true,
+                "adminUserEnabled": false,
                 "policies": {
                     "quarantinePolicy": {
-                        "status": "enabled"
+                        "status": "disabled"
                     },
                     "trustPolicy": {
                         "type": "Notary",
-                        "status": "enabled"
+                        "status": "disabled"
                     },
                     "retentionPolicy": {
                         "days": 7,
-                        "status": "enabled"
+                        "status": "disabled"
                     },
                     "exportPolicy": {
                         "status": "enabled"
@@ -40,25 +40,25 @@
                     },
                     "softDeletePolicy": {
                         "retentionDays": 7,
-                        "status": "enabled"
+                        "status": "disabled"
                     }
                 },
                 "encryption": {
-                    "status": "Disabled"
+                    "status": "disabled"
                 },
-                "dataEndpointEnabled": true,
+                "dataEndpointEnabled": false,
                 "publicNetworkAccess": "Enabled",
                 "networkRuleBypassOptions": "AzureServices",
-                "zoneRedundancy": "enabled",
-                "anonymousPullEnabled": true
+                "zoneRedundancy": "Disabled",
+                "anonymousPullEnabled": false
             }
         },
         {
             "type": "Microsoft.ContainerRegistry/registries/scopeMaps",
             "apiVersion": "2022-02-01-preview",
-            "name": "[concat(parameters('registries_acrdemo460_name'), '/_repositories_admin')]",
+            "name": "[concat(parameters('registries_demoappacr123_name'), '/_repositories_admin')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ContainerRegistry/registries', parameters('registries_acrdemo460_name'))]"
+                "[resourceId('Microsoft.ContainerRegistry/registries', parameters('registries_demoappacr123_name'))]"
             ],
             "properties": {
                 "description": "Can perform all read, write and delete operations on the registry",
@@ -74,9 +74,9 @@
         {
             "type": "Microsoft.ContainerRegistry/registries/scopeMaps",
             "apiVersion": "2022-02-01-preview",
-            "name": "[concat(parameters('registries_acrdemo460_name'), '/_repositories_pull')]",
+            "name": "[concat(parameters('registries_demoappacr123_name'), '/_repositories_pull')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ContainerRegistry/registries', parameters('registries_acrdemo460_name'))]"
+                "[resourceId('Microsoft.ContainerRegistry/registries', parameters('registries_demoappacr123_name'))]"
             ],
             "properties": {
                 "description": "Can pull any repository of the registry",
@@ -88,9 +88,9 @@
         {
             "type": "Microsoft.ContainerRegistry/registries/scopeMaps",
             "apiVersion": "2022-02-01-preview",
-            "name": "[concat(parameters('registries_acrdemo460_name'), '/_repositories_push')]",
+            "name": "[concat(parameters('registries_demoappacr123_name'), '/_repositories_push')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ContainerRegistry/registries', parameters('registries_acrdemo460_name'))]"
+                "[resourceId('Microsoft.ContainerRegistry/registries', parameters('registries_demoappacr123_name'))]"
             ],
             "properties": {
                 "description": "Can push to any repository of the registry",
