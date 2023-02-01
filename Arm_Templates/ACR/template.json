@@ -15,8 +15,8 @@
             "name": "[parameters('registries_acrdemo460_name')]",
             "location": "francecentral",
             "sku": {
-                "name": "Standard",
-                "tier": "Standard"
+                "name": "Premium",
+                "tier": "Premium"
             },
             "properties": {
                 "adminUserEnabled": true,
