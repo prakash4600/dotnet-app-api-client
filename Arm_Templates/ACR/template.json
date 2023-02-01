@@ -44,7 +44,7 @@
                     }
                 },
                 "encryption": {
-                    "status": "enabled"
+                    "status": "Disabled"
                 },
                 "dataEndpointEnabled": true,
                 "publicNetworkAccess": "Enabled",
